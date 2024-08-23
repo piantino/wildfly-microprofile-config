@@ -64,12 +64,46 @@ WILDFLY_HOME/bin/standalone.sh -c standalone-microprofile.xml
 WILDFLY_HOME/bin/standalone.sh -c standalone-microprofile.xml -Dconfig.prop=MyPropertyFileConfigValue-SYS_PROP
 ```
 
+### Imagem docker não otimizada
+
+* Construir a imagem com permissão e acesso
+
+`docker build --tag=microprofile-config:fat .`
+
+* Rodando a imagem
+
+`docker run -d -p 8080:8080 -p 9990:9990 microprofile-config:fat`
+
+* Publicando
+
+`mvn clean package wildfly:deploy -Dwildfly.username=admin -Dwildfly.password=admin123`
+
+* Atalho
+
+`./stard.sh`
+
 ### Imagem otimizada para Cloud
 
 * Construindo com o perfil openshift e glow
+
 `mvn clean package wildfly:image -P openshift`
 
 * Rodando no docker
 
 `docker run -d -p 8080:8080 -p 9990:9990 -e CONFIG_PROP='MyPropertyFileConfigValue-FOR-CLOUD' microprofile-config:latest`
+
+Abrindo a aplicação:
+
+`open http://localhost:8080/microprofile-config/config/value`
+
+Houve a diferença de mais de 200 MB:
+
+```
+REPOSITORY            TAG       IMAGE ID       CREATED          SIZE
+microprofile-config   latest    9f390a6e90fa   10 minutes ago   544MB
+microprofile-config   fat       36f07692a3d0   23 hours ago     780MB
+
+```
+
+[Exemplo de saída do glow](doc/glow.md)
 

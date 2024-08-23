@@ -1,8 +1,8 @@
 #!/bin/bash
 
-docker build --tag=tjsc/microprofile-config .
+docker build --tag=microprofile-config:fat .
 
-docker run -d -p 8080:8080 -p 9990:9990 tjsc/microprofile-config
+docker run -d -p 8080:8080 -p 9990:9990 microprofile-config:fat
 
 mvn clean package wildfly:deploy -Dwildfly.username=admin -Dwildfly.password=admin123
 
