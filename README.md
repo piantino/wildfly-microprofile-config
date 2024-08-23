@@ -64,3 +64,12 @@ WILDFLY_HOME/bin/standalone.sh -c standalone-microprofile.xml
 WILDFLY_HOME/bin/standalone.sh -c standalone-microprofile.xml -Dconfig.prop=MyPropertyFileConfigValue-SYS_PROP
 ```
 
+### Imagem otimizada para Cloud
+
+* Construindo com o perfil openshift e glow
+`mvn clean package wildfly:image -P openshift`
+
+* Rodando no docker
+
+`docker run -d -p 8080:8080 -p 9990:9990 -e CONFIG_PROP='MyPropertyFileConfigValue-FOR-CLOUD' microprofile-config:latest`
+

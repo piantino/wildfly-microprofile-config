@@ -121,8 +121,10 @@
 						<artifactId>wildfly-maven-plugin</artifactId>
 						<configuration>
 							<discover-provisioning-info>
-								<version>${version.server}</version>
+								<version>${wildfly.version}</version>
 								<context>cloud</context>
+								<!-- Ativa sugestões do glow-->
+								<suggest>true</suggest>
 							</discover-provisioning-info>
 							<!--
                                 The parent POM's 'openshift' profile renames the output archive to ROOT.war so
