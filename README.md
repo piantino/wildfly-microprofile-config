@@ -33,7 +33,7 @@ MicroProfile Config QuickStart
 * Baixar o wildfly e executar:
 
 ```
-WILDFLY_HOME/bin/standalone.sh -c standalone-microprofile.xml
+$WILDFLY_HOME/bin/standalone.sh -c standalone-microprofile.xml
 ```
 
 * Construir e publicar a aplicação:
