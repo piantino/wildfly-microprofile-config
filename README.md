@@ -25,6 +25,20 @@ MicroProfile Config QuickStart
 * Release em Agosto de 2024 (Versão minor anual)
 * https://maven.apache.org/docs/history.html
 
+## Funcionalidades
+
+### REST API
+
+https://jakarta.ee/specifications/restful-ws/3.1/
+
+### Documentação de API 
+
+MicroProfile OpenAPI Subsystem - https://github.com/wildfly/wildfly/blob/main/docs/src/main/asciidoc/_admin-guide/subsystem-configuration/MicroProfile_OpenAPI.adoc
+
+Open-API - http://localhost:8080/openapi?format=JSON
+
+Swagger UI - http://localhost:8080/microprofile-config/openapi-ui
+
 ## How-to
 
 
