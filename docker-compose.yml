@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: db_user
+      POSTGRES_PASSWORD: db_pass
+      POSTGRES_DB: db_sample
+  wildfly:
+    image: microprofile-config:latest
+    environment:
+      # Variáveis de sistema
+      CONFIG_PROP: MyPropertyFileConfigValue-FOR-CLOUD
+      # Persistência
+      POSTGRESQL_USER: db_user
+      POSTGRESQL_PASSWORD: db_pass
+      POSTGRESQL_SERVICE_HOST: db
+      POSTGRESQL_SERVICE_PORT: 5432
+      POSTGRESQL_DATABASE: db_sample
+      # Persistência (Mais que um Datasource)
+#      DB_SERVICE_PREFIX_MAPPING: <poll>-postgresql=<PREFIX>
+#      <PREFIX>_JNDI: java:/jboss/datasources/PostgreSQLDS
+#      <PREFIX>_USERNAME: db_user
+#      <PREFIX>_PASSWORD: db_pass
+#      <PREFIX>_DATABASE: sampledb
+#      <PREFIX>_DRIVER: postgresql
+#      <PREFIX>_POSTGRESQL_SERVICE_HOST: db
+#      <PREFIX>_POSTGRESQL_SERVICE_PORT: 5432
+#      <PREFIX>_MAX_POOL_SIZE: 10
+#      <PREFIX>_MIN_POOL_SIZE: 5
+#      <PREFIX>_NONXA: true
+      
+    ports:
+      - 8080:8080
+      - 9990:9990
+    depends_on:
+      - db
+

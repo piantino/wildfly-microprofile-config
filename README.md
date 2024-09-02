@@ -31,13 +31,27 @@ MicroProfile Config QuickStart
 
 https://jakarta.ee/specifications/restful-ws/3.1/
 
-### Documentação de API 
+Documentação da API:
 
-MicroProfile OpenAPI Subsystem - https://github.com/wildfly/wildfly/blob/main/docs/src/main/asciidoc/_admin-guide/subsystem-configuration/MicroProfile_OpenAPI.adoc
+* MicroProfile OpenAPI Subsystem - https://github.com/wildfly/wildfly/blob/main/docs/src/main/asciidoc/_admin-guide/subsystem-configuration/MicroProfile_OpenAPI.adoc
+* Open-API - http://localhost:8080/openapi?format=JSON
+* Swagger UI - http://localhost:8080/microprofile-config/openapi-ui
 
-Open-API - http://localhost:8080/openapi?format=JSON
+### Status do servidor
 
-Swagger UI - http://localhost:8080/microprofile-config/openapi-ui
+MicroProfile Health - https://github.com/wildfly/quickstart/blob/main/microprofile-health/README.adoc
+
+http://localhost:9990/health/live
+
+## Persistência
+
+http://localhost:8080/microprofile-config/todo
+
+Para inserir, abrir o console do navegador e colocar:
+
+```
+fetch("", {method: "POST", body: "Teste"})
+```
 
 ## How-to
 
@@ -77,24 +91,6 @@ WILDFLY_HOME/bin/standalone.sh -c standalone-microprofile.xml
 ```
 WILDFLY_HOME/bin/standalone.sh -c standalone-microprofile.xml -Dconfig.prop=MyPropertyFileConfigValue-SYS_PROP
 ```
-
-### Imagem docker não otimizada
-
-* Construir a imagem com permissão e acesso
-
-`docker build --tag=microprofile-config:fat .`
-
-* Rodando a imagem
-
-`docker run -d -p 8080:8080 -p 9990:9990 microprofile-config:fat`
-
-* Publicando
-
-`mvn clean package wildfly:deploy -Dwildfly.username=admin -Dwildfly.password=admin123`
-
-* Atalho
-
-`./stard.sh`
 
 ### Imagem otimizada para Cloud
 

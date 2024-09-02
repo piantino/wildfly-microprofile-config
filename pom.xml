@@ -23,6 +23,13 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>wildfly-ee-with-tools</artifactId>
+				<version>${wildfly.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 			<!-- importing the microprofile BOM adds MicroProfile specs -->
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>
@@ -57,10 +64,24 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- JPA data base -->
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.transaction</groupId>
+			<artifactId>jakarta.transaction-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- Ativar openapi e swagger-ui -->
 		<dependency>
 			<groupId>org.eclipse.microprofile.openapi</groupId>
 			<artifactId>microprofile-openapi-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.microprofile-ext.openapi-ext</groupId>
@@ -73,7 +94,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -139,6 +159,9 @@
 								<context>cloud</context>
 								<!-- Ativa sugestões do glow-->
 								<suggest>true</suggest>
+								<add-ons>
+									<add-on>postgresql</add-on>
+								</add-ons>
 							</discover-provisioning-info>
 							<!--
                                 The parent POM's 'openshift' profile renames the output archive to ROOT.war so
