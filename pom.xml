@@ -18,7 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
-		<wildfly.version>33.0.0.Final</wildfly.version>
+		<wildfly.version>33.0.1.Final</wildfly.version>
 	</properties>
 
 	<dependencyManagement>
@@ -88,6 +88,21 @@
 			<artifactId>openapi-ui</artifactId>
 			<version>2.0.0</version>
 			<scope>runtime</scope>
+		</dependency>
+
+		<!-- EJB -->
+		<dependency>
+			<groupId>jakarta.ejb</groupId>
+			<artifactId>jakarta.ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Utilitários -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.34</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Testes -->
@@ -163,13 +178,7 @@
 									<add-on>postgresql</add-on>
 								</add-ons>
 							</discover-provisioning-info>
-							<!--
-                                The parent POM's 'openshift' profile renames the output archive to ROOT.war so
-							that the
-                                application is deployed in the root web context. Add ROOT.war to the server.
-                            -->
 							<filename>microprofile-config.war</filename>
-							<add-ons>...</add-ons>
 						</configuration>
 						<executions>
 							<execution>
