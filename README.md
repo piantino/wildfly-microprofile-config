@@ -49,9 +49,7 @@ http://localhost:8080/microprofile-config/todo
 
 Para inserir, abrir o console do navegador e colocar:
 
-```
-fetch("", {method: "POST", body: "Teste"})
-```
+http://localhost:8080/microprofile-config/openapi-ui
 
 ## How-to
 
@@ -117,3 +115,24 @@ microprofile-config   fat       36f07692a3d0   23 hours ago     780MB
 
 [Exemplo de saída do glow](doc/glow.md)
 
+### Rodando no K8s com minicube
+
+* Acesse o dashboard
+
+`minikube dashboard`
+
+* Construia a imagem acessível para o minicube
+
+`eval $(minikube docker-env)`
+
+`mvn clean package wildfly:image -P openshift`
+
+* Aplique as configurações
+
+`kubectl apply -f postgres-deployment.yaml`
+
+`kubectl apply -f deployment.yaml `
+
+* Acesse o serviço
+
+`minikube service microprofile-config`

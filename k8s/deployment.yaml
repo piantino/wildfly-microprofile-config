@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: microprofile-config-secret
+  labels:
+    app: microprofile-config
+data:
+  CONFIG_PROP: MyPropertyFileConfigValue-FOR-K8S
+  POSTGRESQL_USER: db_user
+  POSTGRESQL_PASSWORD: db_pass
+  POSTGRESQL_SERVICE_HOST: postgres
+  POSTGRESQL_SERVICE_PORT: '5432'
+  POSTGRESQL_DATABASE: db_sample
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microprofile-config
+  labels:
+    app: microprofile-config
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microprofile-config
+  template:
+    metadata:
+      labels:
+        app: microprofile-config
+    spec:
+      containers:
+      - name: microprofile-config
+        image: microprofile-config:latest
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - configMapRef:
+              name: microprofile-config-secret
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microprofile-config
+  labels:
+    app: microprofile-config
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+  selector:
+    app: microprofile-config
+
