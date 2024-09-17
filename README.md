@@ -139,6 +139,10 @@ microprofile-config   fat             36f07692a3d0   23 hours ago     780MB
 
 ### Rodando com helm
 
+É preciso estar com o postgres rodando:
+
+`kubectl apply -f ./k8s/postgres-deployment.yaml`
+
 #### Resolvendo problema ao baixar imagem
 
 É possível usar um register local para contornar problemas.
@@ -172,7 +176,7 @@ Deve retornar:
 
 Subindo com helm:
 
-`helm install microprofile-config wildfly/wildfly -f ./charts/helm.yaml`
+`helm install microprofile-config wildfly/wildfly -f ./helm/values.yaml`
 
 Status:
 
