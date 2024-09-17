@@ -96,9 +96,9 @@ WILDFLY_HOME/bin/standalone.sh -c standalone-microprofile.xml -Dconfig.prop=MyPr
 
 `mvn clean package wildfly:image -P openshift`
 
-* Rodando no docker
+* Rodando no docker compose
 
-`docker run -d -p 8080:8080 -p 9990:9990 -e CONFIG_PROP='MyPropertyFileConfigValue-FOR-CLOUD' microprofile-config:latest`
+`./start.sh`
 
 Abrindo a aplicação:
 
@@ -107,9 +107,9 @@ Abrindo a aplicação:
 Houve a diferença de mais de 200 MB:
 
 ```
-REPOSITORY            TAG       IMAGE ID       CREATED          SIZE
-microprofile-config   latest    9f390a6e90fa   10 minutes ago   544MB
-microprofile-config   fat       36f07692a3d0   23 hours ago     780MB
+REPOSITORY            TAG             IMAGE ID       CREATED          SIZE
+microprofile-config   1.0-SNAPSHOT    9f390a6e90fa   10 minutes ago   544MB
+microprofile-config   fat             36f07692a3d0   23 hours ago     780MB
 
 ```
 
@@ -129,10 +129,55 @@ microprofile-config   fat       36f07692a3d0   23 hours ago     780MB
 
 * Aplique as configurações
 
-`kubectl apply -f postgres-deployment.yaml`
+`kubectl apply -f ./k8s/postgres-deployment.yaml`
 
-`kubectl apply -f deployment.yaml `
+`kubectl apply -f ./k8s/deployment.yaml`
 
 * Acesse o serviço
 
 `minikube service microprofile-config`
+
+### Rodando com helm
+
+#### Resolvendo problema ao baixar imagem
+
+É possível usar um register local para contornar problemas.
+
+Instalando serviço de registro de imagem:
+
+`minikube addons enable registry`
+
+Redirecionando porta 500 local para o registry:
+
+`docker run --rm -it --network=host alpine ash -c "apk add socat && socat TCP-LISTEN:5000,reuseaddr,fork TCP:$(minikube ip):5000"`
+
+Criando uma tag local e enviando para o registry do minikube:
+
+```
+docker tag microprofile-config:1.0-SNAPSHOT localhost:5000/microprofile-config:1.0-SNAPSHOT
+docker push localhost:5000/microprofile-config:1.0-SNAPSHOT
+```
+
+Testando o catálogo:
+
+`curl http://localhost:5000/v2/_catalog`
+
+Deve retornar:
+
+```
+{"repositories":["microprofile-config"]}
+```
+
+####
+
+Subindo com helm:
+
+`helm install microprofile-config wildfly/wildfly -f ./charts/helm.yaml`
+
+Status:
+
+`kubectl get deployment microprofile-config -w`
+
+Removendo:
+
+`helm uninstall microprofile-config`

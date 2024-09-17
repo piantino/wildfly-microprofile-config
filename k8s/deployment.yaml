@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: microprofile-config
-        image: microprofile-config:latest
+        image: microprofile-config:1.0-SNAPSHOT
         imagePullPolicy: IfNotPresent
         envFrom:
           - configMapRef:

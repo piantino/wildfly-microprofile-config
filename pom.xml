@@ -179,6 +179,7 @@
 								</add-ons>
 							</discover-provisioning-info>
 							<filename>microprofile-config.war</filename>
+							<tag>${project.version}</tag>
 						</configuration>
 						<executions>
 							<execution>

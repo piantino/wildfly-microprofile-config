@@ -6,7 +6,7 @@ services:
       POSTGRES_PASSWORD: db_pass
       POSTGRES_DB: db_sample
   wildfly:
-    image: microprofile-config:latest
+    image: microprofile-config:1.0-SNAPSHOT
     environment:
       # Variáveis de sistema
       CONFIG_PROP: MyPropertyFileConfigValue-FOR-CLOUD
