@@ -18,7 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
-		<wildfly.version>33.0.1.Final</wildfly.version>
+		<wildfly.version>33.0.2.Final</wildfly.version>
 	</properties>
 
 	<dependencyManagement>
@@ -121,6 +121,7 @@
 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>5.0.1.Final</version>
 			</plugin>
 		</plugins>
 		<pluginManagement><!-- lock down plugins versions to avoid using Maven
@@ -168,6 +169,9 @@
 					<plugin>
 						<groupId>org.wildfly.plugins</groupId>
 						<artifactId>wildfly-maven-plugin</artifactId>
+						<version>5.0.1.Final</version>
+						<!--
+						https://docs.wildfly.org/wildfly-maven-plugin/releases/5.0/package-mojo.html -->
 						<configuration>
 							<discover-provisioning-info>
 								<version>${wildfly.version}</version>
@@ -177,9 +181,29 @@
 								<add-ons>
 									<add-on>postgresql</add-on>
 								</add-ons>
+								<verbose>true</verbose>
 							</discover-provisioning-info>
 							<filename>microprofile-config.war</filename>
 							<tag>${project.version}</tag>
+							<packaging-scripts>
+								<!-- Exemplo de configuração -->
+								<!--
+								<packaging-script>
+									<scripts>
+									  <script>../scripts/script1.cli</script>
+									</scripts>
+									<commands>
+									  <command>/system-property=foo:add(value=bar)</command>
+									</commands>
+									<properties-files>
+									  <property-file>my-properties.properties</property-file>
+									</properties-files>
+									<java-opts>
+									  <java-opt>-Xmx256m</java-opt>
+									</java-opts>
+								  </packaging-script>
+								-->
+							</packaging-scripts>
 						</configuration>
 						<executions>
 							<execution>

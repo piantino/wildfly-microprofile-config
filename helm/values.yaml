@@ -22,3 +22,11 @@ deploy:
     value: '5432'
   - name: POSTGRESQL_DATABASE
     value: db_sample
+  resources:
+    requests: # solicitado
+      cpu: 100m
+      memory: "512Mi"
+    limits:  # limite máximo
+      cpu: 500m
+      memory: "1Gi"
+

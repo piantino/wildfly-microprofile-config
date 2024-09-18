@@ -25,6 +25,10 @@ MicroProfile Config QuickStart
 * Release em Agosto de 2024 (Versão minor anual)
 * https://maven.apache.org/docs/history.html
 
+### wildfly-maven-plugin 5.0
+
+https://docs.wildfly.org/wildfly-maven-plugin/releases/5.0/
+
 ## Funcionalidades
 
 ### REST API
@@ -182,6 +186,19 @@ Status:
 
 `kubectl get deployment microprofile-config -w`
 
+Atualizando:
+
+`helm upgrade microprofile-config wildfly/wildfly -f ./helm/values.yaml`
+
 Removendo:
 
 `helm uninstall microprofile-config`
+
+### Analisando recurso
+
+`kubectl top pod microprofile-config-<random>`
+
+```
+NAME                                   CPU(cores)   MEMORY(bytes)   
+microprofile-config-74c86b5b97-5z45v   3m           427Mi
+```
