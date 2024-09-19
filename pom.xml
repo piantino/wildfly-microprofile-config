@@ -18,7 +18,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
-		<wildfly.version>33.0.2.Final</wildfly.version>
+		<wildfly.version>33.0.1.Final</wildfly.version>
+		<wildfly.plugin.version>5.0.1.Final</wildfly.plugin.version>
+
+		<app.conf.prop>MyPropertyFileConfigValue-LOCAL_DEV</app.conf.prop>
 	</properties>
 
 	<dependencyManagement>
@@ -117,11 +120,43 @@
 		<!-- Set the name of the archive -->
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
-			<!-- Allows to use mvn wildfly:deploy -->
+			<!-- Allows to use mvn clean wildfly:dev -->
+			<!-- https://docs.wildfly.org/wildfly-maven-plugin/releases/5.0/package-mojo.html -->
 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
-				<version>5.0.1.Final</version>
+				<version>${wildfly.plugin.version}</version>
+				<configuration>
+					<!-- Usar glow para configurar o wilfly -->
+					<discover-provisioning-info>
+						<!-- Versão do servidor wildfly a ser provisionado -->
+						<version>${wildfly.version}</version>
+						<context>cloud</context>
+						<!-- Ativa sugestões do glow-->
+						<suggest>true</suggest>
+						<add-ons>
+							<add-on>postgresql</add-on>
+						</add-ons>
+						<verbose>true</verbose>
+					</discover-provisioning-info>
+					<!-- Variáveis para execução local apenas-->
+					<!-- https://docs.wildfly.org/wildfly-maven-plugin/releases/4.2/dev-mojo.html#env -->
+					<env>
+						<POSTGRESQL_USER>db_user</POSTGRESQL_USER>
+						<POSTGRESQL_PASSWORD>db_pass</POSTGRESQL_PASSWORD>
+						<POSTGRESQL_SERVICE_HOST>localhost</POSTGRESQL_SERVICE_HOST>
+						<POSTGRESQL_SERVICE_PORT>5432</POSTGRESQL_SERVICE_PORT>
+						<POSTGRESQL_DATABASE>db_sample</POSTGRESQL_DATABASE>
+						<CONFIG_PROP>${app.conf.prop}</CONFIG_PROP>
+					</env>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>package</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 		<pluginManagement><!-- lock down plugins versions to avoid using Maven
@@ -163,47 +198,44 @@
 
 	<profiles>
 		<profile>
-			<id>openshift</id>
+			<!-- Uso manual do galleon, sem usar o glow -->
+			<id>dev-galleon</id>
 			<build>
 				<plugins>
+					<!-- Allows to use mvn clean wildfly:dev -P dev-galleon -->
 					<plugin>
 						<groupId>org.wildfly.plugins</groupId>
 						<artifactId>wildfly-maven-plugin</artifactId>
-						<version>5.0.1.Final</version>
-						<!--
-						https://docs.wildfly.org/wildfly-maven-plugin/releases/5.0/package-mojo.html -->
+						<version>${wildfly.plugin.version}</version>
 						<configuration>
-							<discover-provisioning-info>
-								<version>${wildfly.version}</version>
-								<context>cloud</context>
-								<!-- Ativa sugestões do glow-->
-								<suggest>true</suggest>
-								<add-ons>
-									<add-on>postgresql</add-on>
-								</add-ons>
-								<verbose>true</verbose>
-							</discover-provisioning-info>
-							<filename>microprofile-config.war</filename>
-							<tag>${project.version}</tag>
-							<packaging-scripts>
-								<!-- Exemplo de configuração -->
+							<feature-packs>
+								<feature-pack>
+									<location>wildfly@maven(org.jboss.universe:community-universe)</location>
+								</feature-pack>
+								<feature-pack>
+									<location>org.wildfly:wildfly-galleon-pack:33.0.2.Final</location>
+								</feature-pack>
+								<feature-pack>
+									<!--
+									https://github.com/wildfly-extras/wildfly-datasources-galleon-pack -->
+									<location>
+										org.wildfly:wildfly-datasources-galleon-pack:8.0.1.Final</location>
+								</feature-pack>
+							</feature-packs>
+							<layers>
 								<!--
-								<packaging-script>
-									<scripts>
-									  <script>../scripts/script1.cli</script>
-									</scripts>
-									<commands>
-									  <command>/system-property=foo:add(value=bar)</command>
-									</commands>
-									<properties-files>
-									  <property-file>my-properties.properties</property-file>
-									</properties-files>
-									<java-opts>
-									  <java-opt>-Xmx256m</java-opt>
-									</java-opts>
-								  </packaging-script>
-								-->
-							</packaging-scripts>
+								https://docs.wildfly.org/33/Galleon_Guide.html#wildfly_foundational_galleon_layers -->
+								<layer>jaxrs-server</layer>
+								<layer>postgresql-datasource</layer>
+								<layer>microprofile-openapi</layer>
+							</layers>
+							<env>
+								<POSTGRESQL_USER>db_user</POSTGRESQL_USER>
+								<POSTGRESQL_PASSWORD>db_pass</POSTGRESQL_PASSWORD>
+								<POSTGRESQL_SERVICE_HOST>localhost</POSTGRESQL_SERVICE_HOST>
+								<POSTGRESQL_SERVICE_PORT>5432</POSTGRESQL_SERVICE_PORT>
+								<POSTGRESQL_DATABASE>db_sample</POSTGRESQL_DATABASE>
+							</env>
 						</configuration>
 						<executions>
 							<execution>

@@ -1,5 +1,5 @@
 #!/bin/bash
 
-mvn clean package wildfly:image -P openshift
+mvn clean package wildfly:image
 
 docker compose up --force-recreate

@@ -60,19 +60,32 @@ http://localhost:8080/microprofile-config/openapi-ui
 
 ### Rodando a aplicação
 
-* Baixar o wildfly e executar:
+Não é preciso baixar ou configurar um servidor, basta usar o wildfly-glow:
+
+https://docs.wildfly.org/wildfly-glow/
+
+"WildFly Glow is an evolution of the WildFly Galleon provisioning tooling."
 
 ```
-$WILDFLY_HOME/bin/standalone.sh -c standalone-microprofile.xml
+./start-dev.sh
+```
+Ou subir o banco e executar via maven:
+
+```
+docker compose up db -d
+
+mvn clean package wildfly:dev
 ```
 
-* Construir e publicar a aplicação:
-
-`mvn clean package wildfly:deploy`
-
-* Acessa e ver a configuração:
+Acessa e ver a configuração:
 
 http://localhost:8080/microprofile-config/config/value
+
+### Deploy em um servidor já existente
+
+Se preferir configurar na mão:
+
+`mvn clean wildfly:deploy`
 
 ### Alterado a variável de configuração
 
@@ -84,25 +97,31 @@ http://localhost:8080/microprofile-config/config/value
 * Via variável de ambiente:
 
 ```
+mvn clean wildfly:dev -Dapp.conf.prop=MyPropertyFileConfigValue-COMMAND_LINE
+```
+
+```
+mvn clean wildfly:provision
 export CONFIG_PROP=MyPropertyFileConfigValue-ENV-VAR
-WILDFLY_HOME/bin/standalone.sh -c standalone-microprofile.xml
+./target/server/bin/standalone.sh -c standalone-microprofile.xml
 ```
 
 * Por propriedade do sistema (JVM, standalone, etc...)
 
 ```
-WILDFLY_HOME/bin/standalone.sh -c standalone-microprofile.xml -Dconfig.prop=MyPropertyFileConfigValue-SYS_PROP
+mvn clean wildfly:provision
+./target/server/bin/standalone.sh -Dconfig.prop=MyPropertyFileConfigValue-SYS_PROP
 ```
 
 ### Imagem otimizada para Cloud
 
-* Construindo com o perfil openshift e glow
+Construir:
 
-`mvn clean package wildfly:image -P openshift`
+`mvn clean package wildfly:image`
 
-* Rodando no docker compose
+Rodando no docker compose:
 
-`./start.sh`
+`./start-docker.sh`
 
 Abrindo a aplicação:
 
