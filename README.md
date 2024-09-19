@@ -27,7 +27,7 @@ MicroProfile Config QuickStart
 
 ### wildfly-maven-plugin 5.0
 
-https://docs.wildfly.org/wildfly-maven-plugin/releases/5.0/
+* https://docs.wildfly.org/wildfly-maven-plugin/releases/5.0/
 
 ## Funcionalidades
 
@@ -41,24 +41,24 @@ Documentação da API:
 * Open-API - http://localhost:8080/openapi?format=JSON
 * Swagger UI - http://localhost:8080/microprofile-config/openapi-ui
 
-### Status do servidor
+### Status do servidor (probes)
 
 MicroProfile Health - https://github.com/wildfly/quickstart/blob/main/microprofile-health/README.adoc
 
 http://localhost:9990/health/live
 
-## Persistência
+### Persistência
 
 http://localhost:8080/microprofile-config/todo
 
-Para inserir, abrir o console do navegador e colocar:
+Para testar com o swagger:
 
 http://localhost:8080/microprofile-config/openapi-ui
 
 ## How-to
 
 
-### Rodando a aplicação
+### Rodando a aplicação localmente
 
 Não é preciso baixar ou configurar um servidor, basta usar o wildfly-glow:
 
@@ -77,13 +77,13 @@ docker compose up db -d
 mvn clean package wildfly:dev
 ```
 
-Acessa e ver a configuração:
+Ver a configuração:
 
 http://localhost:8080/microprofile-config/config/value
 
 ### Deploy em um servidor já existente
 
-Se preferir configurar na mão:
+Se preferir configurar o widlfy e standalone na mão (não recomendado):
 
 `mvn clean wildfly:deploy`
 
@@ -127,15 +127,6 @@ Abrindo a aplicação:
 
 `open http://localhost:8080/microprofile-config/config/value`
 
-Houve a diferença de mais de 200 MB:
-
-```
-REPOSITORY            TAG             IMAGE ID       CREATED          SIZE
-microprofile-config   1.0-SNAPSHOT    9f390a6e90fa   10 minutes ago   544MB
-microprofile-config   fat             36f07692a3d0   23 hours ago     780MB
-
-```
-
 [Exemplo de saída do glow](doc/glow.md)
 
 ### Rodando no K8s com minicube
@@ -144,7 +135,7 @@ microprofile-config   fat             36f07692a3d0   23 hours ago     780MB
 
 `minikube dashboard`
 
-* Construia a imagem acessível para o minicube
+* Construia a imagem acessível para o minikube
 
 `eval $(minikube docker-env)`
 
