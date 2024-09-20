@@ -186,11 +186,15 @@ Deve retornar:
 {"repositories":["microprofile-config"]}
 ```
 
-####
+#### Usando charts
 
 Subindo com helm:
 
 `helm install microprofile-config wildfly/wildfly -f ./helm/values.yaml`
+
+Redirecionando portas:
+
+`kubectl port-forward service/microprofile-config 8080:8080`
 
 Status:
 
@@ -210,5 +214,5 @@ Removendo:
 
 ```
 NAME                                   CPU(cores)   MEMORY(bytes)   
-microprofile-config-74c86b5b97-5z45v   3m           427Mi
+microprofile-config-74c86b5b97-bb6f2   4m           352Mi
 ```
