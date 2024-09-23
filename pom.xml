@@ -139,7 +139,10 @@
 						</add-ons>
 						<verbose>true</verbose>
 					</discover-provisioning-info>
-					<!-- Variáveis para execução local apenas-->
+					<!-- Configurações para execução local apenas-->
+					<debug>true</debug>
+                    <debugPort>5005</debugPort>
+                    <debugSuspend>false</debugSuspend>
 					<!-- https://docs.wildfly.org/wildfly-maven-plugin/releases/4.2/dev-mojo.html#env -->
 					<env>
 						<POSTGRESQL_USER>db_user</POSTGRESQL_USER>
