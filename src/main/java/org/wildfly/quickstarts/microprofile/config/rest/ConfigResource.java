@@ -1,4 +1,4 @@
-package org.wildfly.quickstarts.microprofile.config;
+package org.wildfly.quickstarts.microprofile.config.rest;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 

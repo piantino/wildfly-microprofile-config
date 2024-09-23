@@ -55,6 +55,27 @@ Para testar com o swagger:
 
 http://localhost:8080/microprofile-config/openapi-ui
 
+### Autenticação SSO com OpenId Connect
+
+O wildfly já vêm com o Elytron que dá suporte a OpenId Connect.
+Basta rodar informando as configurações do SSO.
+
+```
+mvn clean wildfly:dev \
+    -Dapp.sso.url=https://<servidor keycloak>/realms/<realm> \
+    -Dapp.sso.client.id=<id cliente> \
+    -Dapp.sso.client.secret=<credencial cliente>
+```
+
+http://localhost:8080/microprofile-config/secured/
+
+http://localhost:8080/microprofile-config/secured/username
+
+#### Configurações
+
+WEB-INF/web.xml
+WEB-INF/oidc.json
+
 ## How-to
 
 

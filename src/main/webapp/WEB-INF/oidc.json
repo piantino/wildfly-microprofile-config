@@ -1,0 +1,10 @@
+{
+    "client-id" : "${env.OIDC_CLIENT_ID}",
+    "credentials" : {
+        "secret" : "${env.OIDC_CLIENT_SECRET}"
+    },
+    "provider-url" : "${env.OIDC_PROVIDER_URL}",
+    "public-client" : "false",
+    "principal-attribute" : "preferred_username",
+    "ssl-required" : "EXTERNAL"
+}
