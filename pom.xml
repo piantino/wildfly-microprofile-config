@@ -20,6 +20,7 @@
 		<maven.compiler.target>21</maven.compiler.target>
 		<wildfly.version>33.0.1.Final</wildfly.version>
 		<wildfly.plugin.version>5.0.1.Final</wildfly.plugin.version>
+		<wildfly.elytron.version>2.5.1.Final</wildfly.elytron.version>
 
 		<app.conf.prop>MyPropertyFileConfigValue-LOCAL_DEV</app.conf.prop>
 		<app.sso.url>https://localhost:8080/realms/myrealm</app.sso.url>
@@ -83,6 +84,24 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.security.enterprise</groupId>
+			<artifactId>jakarta.security.enterprise-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- Ativar openapi e swagger-ui -->
 		<dependency>
 			<groupId>org.eclipse.microprofile.openapi</groupId>
@@ -100,6 +119,14 @@
 		<dependency>
 			<groupId>jakarta.ejb</groupId>
 			<artifactId>jakarta.ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Dados do SSO via OpenId Connect -->
+		<dependency>
+			<groupId>org.wildfly.security</groupId>
+			<artifactId>wildfly-elytron-http-oidc</artifactId>
+			<version>${wildfly.elytron.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -144,9 +171,10 @@
 					</discover-provisioning-info>
 					<!-- Configurações para execução local apenas-->
 					<debug>true</debug>
-                    <debugPort>5005</debugPort>
-                    <debugSuspend>false</debugSuspend>
-					<!-- https://docs.wildfly.org/wildfly-maven-plugin/releases/4.2/dev-mojo.html#env -->
+					<debugPort>5005</debugPort>
+					<debugSuspend>false</debugSuspend>
+					<!--
+					https://docs.wildfly.org/wildfly-maven-plugin/releases/4.2/dev-mojo.html#env -->
 					<env>
 						<POSTGRESQL_USER>db_user</POSTGRESQL_USER>
 						<POSTGRESQL_PASSWORD>db_pass</POSTGRESQL_PASSWORD>
@@ -165,6 +193,7 @@
 						<OIDC_PROVIDER_URL>${app.sso.url}</OIDC_PROVIDER_URL>
 						<OIDC_CLIENT_ID>${app.sso.client.id}</OIDC_CLIENT_ID>
 						<OIDC_CLIENT_SECRET>${app.sso.client.secret}</OIDC_CLIENT_SECRET>
+						<OIDC_SSL_REQUIRED>EXTERNAL</OIDC_SSL_REQUIRED>
 					</env>
 				</configuration>
 				<executions>

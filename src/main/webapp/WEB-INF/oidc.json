@@ -6,5 +6,5 @@
     "provider-url" : "${env.OIDC_PROVIDER_URL}",
     "public-client" : "false",
     "principal-attribute" : "preferred_username",
-    "ssl-required" : "EXTERNAL"
+    "ssl-required" : "${env.OIDC_SSL_REQUIRED:ALL}"
 }

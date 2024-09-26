@@ -73,8 +73,8 @@ http://localhost:8080/microprofile-config/secured/username
 
 #### Configurações
 
-WEB-INF/web.xml
-WEB-INF/oidc.json
+* WEB-INF/web.xml
+* WEB-INF/oidc.json
 
 ## How-to
 
