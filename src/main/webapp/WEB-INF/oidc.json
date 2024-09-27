@@ -1,10 +1,12 @@
 {
-    "client-id" : "${env.OIDC_CLIENT_ID}",
-    "credentials" : {
-        "secret" : "${env.OIDC_CLIENT_SECRET}"
+    "client-id": "${env.OIDC_CLIENT_ID}",
+    "credentials": {
+        "secret": "${env.OIDC_CLIENT_SECRET}"
     },
-    "provider-url" : "${env.OIDC_PROVIDER_URL}",
-    "public-client" : "false",
-    "principal-attribute" : "preferred_username",
-    "ssl-required" : "${env.OIDC_SSL_REQUIRED:ALL}"
+    "provider-url": "${env.OIDC_PROVIDER_URL}",
+    "public-client": "false",
+    "principal-attribute": "preferred_username",
+    "ssl-required": "${env.OIDC_SSL_REQUIRED:ALL}",
+    "enable-cors": "${env.OIDC_ENABLE_CORS:true}",
+    "cors-allowed-methods": "GET, POST, PUT, DELETE"
 }

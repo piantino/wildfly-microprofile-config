@@ -75,6 +75,7 @@ http://localhost:8080/microprofile-config/secured/username
 
 * WEB-INF/web.xml
 * WEB-INF/oidc.json
+  * https://docs.wildfly.org/33/Admin_Guide.html#deployment-configuration
 
 ## How-to
 

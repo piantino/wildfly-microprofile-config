@@ -68,7 +68,7 @@ public class SecuredRest {
 
 	@GET
 	@Path("/id-token")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String idToken() {
 		// Apenas para teste
 		// Não retorne o token inteiro em produção

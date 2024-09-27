@@ -47,7 +47,7 @@ public class SecuredEjbRest {
 
 	@GET
 	@Path("/id-token")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String idToken() {
 		return securedBean.idToken();
 	}
