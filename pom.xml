@@ -20,7 +20,7 @@
 		<maven.compiler.target>21</maven.compiler.target>
 		<wildfly.version>33.0.1.Final</wildfly.version>
 		<wildfly.plugin.version>5.0.1.Final</wildfly.plugin.version>
-		<wildfly.elytron.version>2.5.1.Final</wildfly.elytron.version>
+		<wildfly.elytron.version>2.6.2.Final</wildfly.elytron.version>
 
 		<app.conf.prop>MyPropertyFileConfigValue-LOCAL_DEV</app.conf.prop>
 		<app.sso.url>https://localhost:8080/realms/myrealm</app.sso.url>
